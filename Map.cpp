@@ -3,24 +3,42 @@
 
 
 Map::Map() {
-    rows = 10;
-    cols = 10;
+    rows = 30;
+    cols = 30;
     
-    // 1. ล้างกระดานให้เป็นหญ้า (0) ทั้งหมด
-    for (int i = 0; i < rows; i++) {
-        for (int j = 0; j < cols; j++) {
+    // ล้างกระดาน
+  for (int i = 0; i < rows; i++)
+        for (int j = 0; j < cols; j++)
             grid[i][j] = 0;
-        }
-    }
 
-    // 2. สร้างทางเดินเป็นเส้นตรง (แถวที่ 5 ตั้งแต่คอลัมน์ 0 ถึง 8)
-    int pathRow = 5; // กำหนดให้เดินที่แถวที่ 5
-    for (int j = 0; j < 9; j++) {
-        grid[pathRow][j] = 1; 
-    }
+    int topLane = rows / 4;        // 30/4 = 7
+    int middleRow = rows / 2;      // 15
+    int bottomLane = rows - 5;     // 25
+    int rightCol = cols - 6;       // 24
 
-    // 3. วางเป้าหมาย (H) ไว้ที่ปลายเส้นตรง (แถวที่ 5 คอลัมน์ที่ 9)
-    grid[pathRow][9] = 2; 
+    //top_lane
+        for (int j = 0; j < rightCol; j++)
+        grid[topLane][j] = 1;
+
+    //ทางลง
+       for (int i = topLane; i < middleRow; i++)
+        grid[i][rightCol] = 1;
+
+    //กลับมาทางซ้าย
+        for (int j = rightCol; j >= 5; j--)
+        grid[middleRow][j] = 1;
+
+    //ลงอีกนิด
+      for (int i = middleRow; i < bottomLane; i++)
+        grid[i][5] = 1;
+
+    //ทางตรงเข้าฐานและ
+    for (int j = 5; j < cols - 1; j++)
+        grid[bottomLane][j] = 1;
+
+    //ฐาน
+    grid[bottomLane][cols - 1] = 2;
+
 }
 void Map::draw() {
     std::cout << "--- Hungry Hamburger Tower Defense Map ---" << std::endl;
@@ -28,13 +46,13 @@ void Map::draw() {
         for (int j = 0; j < cols; j++) {
             
             if (grid[i][j] == 0) {
-                std::cout << ". "; // พื้นที่ว่าง
+                std::cout << ". "; //ที่ว่าง
             } 
             else if (grid[i][j] == 1) {
-                std::cout << "# "; // ทางเดินศัตรู
+                std::cout << "# "; //ทางเดิน
             } 
             else if (grid[i][j] == 2) {
-                std::cout << "H "; // นี่คือส่วนที่เพิ่มเข้ามา: ถ้าเป็นเลข 2 ให้พิมพ์ตัว H
+                std::cout << "H "; // ถ้าเป็นเลข 2 ให้พิมพ์ตัว H (ฐาน)
             }
 
         }
@@ -50,4 +68,11 @@ bool Map::isPath(int r, int c) {
 bool Map::canPlace(int r, int c) { 
     if (r < 0 || r >= rows || c < 0 || c >= cols) return false;
     return grid[r][c] == 0; 
+}
+
+bool Map::reachedBase(int r, int c) { 
+    if (r < 0 || r >= rows || c < 0 || c >= cols) return false;
+        return false;
+
+    return grid[r][c] == 2;
 }
