@@ -2,6 +2,8 @@
 #define ENEMY_H
 
 #include <string>
+#include <vector>
+#include <utility>
 
 class Enemy {
 protected:
@@ -9,11 +11,13 @@ protected:
     int col;
     int hp;
     int speed;
+    int pathIndex;
 
 public:
     Enemy(int r, int h, int s);
+    virtual ~Enemy() {}
 
-    virtual void move();
+    virtual void move(const std::vector<std::pair<int,int>>& path);
     void takeDamage(int dmg);
     bool isDead();
 

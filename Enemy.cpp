@@ -6,10 +6,18 @@ Enemy::Enemy(int r, int h, int s) {
     col = 0;
     hp = h;
     speed = s;
+    pathIndex = 0;
 }
 
-void Enemy::move() {
-    col += speed;
+void Enemy::move(const std::vector<std::pair<int,int>>& path) {
+
+    pathIndex += speed;
+
+    if (pathIndex >= path.size())
+        pathIndex = path.size() - 1;
+
+    row = path[pathIndex].first;
+    col = path[pathIndex].second;
 }
 
 void Enemy::takeDamage(int dmg) {

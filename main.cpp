@@ -1,5 +1,7 @@
 #include <iostream>
 #include "Map.h"
+#include <vector>
+#include "Enemy.h"
 
 int main() {
     Map myMap;      // สร้างวัตถุแผนที่
@@ -43,6 +45,44 @@ int main() {
     // ตำแหน่ง (100,100) อยู่นอกแผนที่ ต้อง return false
     if (!myMap.canPlace(100, 100))
         std::cout << "(100,100) is invalid position\n";
+
+    // ===============================
+    // Enemy System
+    // ===============================
+
+std::vector<Enemy*> enemies;
+
+enemies.push_back(new NormalEnemy(7));
+enemies.push_back(new FastEnemy(7));
+
+// ดึง path จาก map
+std::vector<std::pair<int,int>> path = myMap.getPath();
+if (path.empty()) {
+    std::cout << "Path is empty! Check Map.cpp\n";
+    return 0;
+}
+
+// game loop ทดลองเดิน 100 step
+for (int step = 0; step < 100; step++) {
+
+    std::cout << "\n---- Step " << step << " ----\n";
+
+    for (Enemy* e : enemies) {
+
+        e->move(path);
+
+        std::cout << "Enemy at ("
+                  << e->getRow() << ", "
+                  << e->getCol() << ")\n";
+
+        if (myMap.reachedBase(e->getRow(), e->getCol()))
+            std::cout << "Enemy reached base!\n";
+    }
+}
+
+// ลบ memory ตอนจบ
+for (Enemy* e : enemies)
+    delete e;
 
 
     return 0;

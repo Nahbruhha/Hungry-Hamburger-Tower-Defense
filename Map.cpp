@@ -1,4 +1,6 @@
 #include "Map.h"
+#include <vector>
+#include <utility>
 #include <iostream>
 
 
@@ -17,27 +19,38 @@ Map::Map() {
     int rightCol = cols - 6;       // 24
 
     //top_lane
-        for (int j = 0; j < rightCol; j++)
+        for (int j = 0; j < rightCol; j++) {
         grid[topLane][j] = 1;
+        path.push_back({topLane, j});
+        }
 
     //ทางลง
-       for (int i = topLane; i < middleRow; i++)
+       for (int i = topLane; i < middleRow; i++) {
         grid[i][rightCol] = 1;
+        path.push_back({i, rightCol});
+       }
 
     //กลับมาทางซ้าย
-        for (int j = rightCol; j >= 5; j--)
+        for (int j = rightCol; j >= 5; j--) {
         grid[middleRow][j] = 1;
+        path.push_back({middleRow, j});
+        }
 
     //ลงอีกนิด
-      for (int i = middleRow; i < bottomLane; i++)
+      for (int i = middleRow; i < bottomLane; i++) {
         grid[i][5] = 1;
+        path.push_back({i, 5});
+      }
 
     //ทางตรงเข้าฐานและ
-    for (int j = 5; j < cols - 1; j++)
-        grid[bottomLane][j] = 1;
-
+    for (int j = 5; j < cols - 1; j++) {
+    grid[bottomLane][j] = 1;
+    path.push_back({bottomLane, j});
+}
     //ฐาน
     grid[bottomLane][cols - 1] = 2;
+    path.push_back({bottomLane, cols - 1});
+
 
 }
 void Map::draw() {
@@ -71,8 +84,11 @@ bool Map::canPlace(int r, int c) {
 }
 
 bool Map::reachedBase(int r, int c) { 
-    if (r < 0 || r >= rows || c < 0 || c >= cols) return false;
+    if (r < 0 || r >= rows || c < 0 || c >= cols) 
         return false;
 
     return grid[r][c] == 2;
+}
+std::vector<std::pair<int,int>> Map::getPath() {
+    return path;
 }
