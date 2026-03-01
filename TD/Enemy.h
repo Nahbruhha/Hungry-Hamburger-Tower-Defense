@@ -25,7 +25,7 @@ public:
     sf::Vector2f getPosition() const;
     int getReward() const { return m_reward; }
     void kill();
-
+    
 private:
     const std::vector<sf::Vector2f>* m_path;
     size_t m_currentIndex = 0;

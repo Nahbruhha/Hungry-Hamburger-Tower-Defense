@@ -18,7 +18,7 @@ public:
 
     sf::Vector2i getCellFromPixel(const sf::Vector2i& mousePos) const;
     bool isValidCell(int row, int col) const;
-
+    
     TileType getTile(int row, int col) const;
     void setTile(int row, int col, TileType type);
 
