@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="TD/TD.vcxproj" Id="f7a1f0be-8026-4255-9b12-15e8812bd895" />
+</Solution>
