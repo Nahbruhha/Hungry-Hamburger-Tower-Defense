@@ -80,7 +80,7 @@ int main()
     
 
     sf::RenderWindow window(sf::VideoMode({ COLS * TILE_SIZE, ROWS * TILE_SIZE }), //window
-        "Tower Defense - Grid Test", sf::Style::Titlebar | sf::Style::Close);
+        "Hungry Hamburger Tower Defense", sf::Style::Titlebar | sf::Style::Close);
 
     sf::Text basicText(font), sniperText(font), rapidText(font);
 
@@ -100,7 +100,7 @@ int main()
 
     sf::Text titleText(font);
     titleText.setCharacterSize(60);
-    titleText.setString("Tower Defense");
+    titleText.setString("Hungry Hamburger Tower Defense");
     titleText.setPosition({ 350.f, 200.f });
 
     sf::RectangleShape startButton({ 300.f, 80.f });
@@ -116,7 +116,7 @@ int main()
     topBar.setSize({ window.getSize().x * 1.f, 80.f });
     topBar.setFillColor(sf::Color(30, 30, 30));
     topBar.setPosition({ 0.f, 0.f });
-    
+        
     sf::Vector2u windowSize = window.getSize();
     sf::FloatRect titleBounds = titleText.getLocalBounds();
     titleText.setOrigin({ titleBounds.size.x / 2.f, titleBounds.size.y / 2.f });
@@ -236,7 +236,7 @@ int main()
                             gameState = GameState::Playing;
 
                             // resset everythign
-                            playerHP = 10;
+                            playerHP = 1;
                             gold = 300;
                             score = 0;
                             wave = 1;
@@ -247,7 +247,7 @@ int main()
                         }
                     }
                 }
-            }
+            } //end of gamestate==menu
 
             // =====================
             // GAME OVER RESTART
@@ -370,7 +370,7 @@ int main()
                         break; // STOP here
                     }
 
-                    // 3️⃣ Otherwise, deselect
+                    //Otherwise, deselect
                     selectedTowerIndex = -1;
 
 
@@ -496,8 +496,7 @@ int main()
                 std::remove_if(enemies.begin(), enemies.end(),
                     [&](Enemy& e)
                     {
-                        if (e.isDead())
-                        {
+                        
                             if (e.isDead())
                             {
                                 gold += e.getReward();
@@ -505,12 +504,12 @@ int main()
                                 soundManager.playEnemyDead();
                                 return true;
                             }
-                        }
+                        
 
                         if (e.reachedEnd())
                         {
                             playerHP--;
-                            soundManager.playOver();
+                            
                             return true;
                         }
 
@@ -521,6 +520,7 @@ int main()
             
             if (playerHP <= 0)
             {
+                soundManager.playOver();
                 gameState = GameState::GameOver;
                 saveScore(score);
             }
@@ -697,6 +697,7 @@ int main()
 
         if (gameState == GameState::GameOver)
         {
+            
             sf::Text gameOverText(font);
             gameOverText.setCharacterSize(60);
             gameOverText.setString("GAME OVER");
