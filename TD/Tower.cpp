@@ -151,7 +151,7 @@ void Tower::upgrade(std::vector<Enemy>& enemies)
 
     m_level++;
 
-    // Safe levels
+
     if (m_level <= 5)
     {
         m_damage *= 1.25f;
@@ -160,10 +160,10 @@ void Tower::upgrade(std::vector<Enemy>& enemies)
         return;
     }
 
-    // Unstable levels 6-9
+
     if (m_level >= 6 && m_level <= 9)
     {
-        float explosionChance = 0.1f * (m_level - 5); // 10%,20%,30%,40%
+        float explosionChance = 0.1f * (m_level - 5);
 
         if ((float)rand() / RAND_MAX < explosionChance)
         {
@@ -179,7 +179,6 @@ void Tower::upgrade(std::vector<Enemy>& enemies)
 
 
 
-    // Level 10 = Nuclear unlocked
     if (m_level >= 10)
     {
         m_isNuclear = true;

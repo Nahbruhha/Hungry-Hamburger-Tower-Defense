@@ -30,29 +30,15 @@ void Grid::draw(sf::RenderWindow& window) const
             switch (m_grid[row][col])
             {
             case TileType::Empty:
-                tileShape.setFillColor(sf::Color(50, 50, 50));
+                tileShape.setFillColor(sf::Color(34, 139, 34));
                 break;
 
             case TileType::Path:
-                tileShape.setFillColor(sf::Color::Yellow);
+                tileShape.setFillColor(sf::Color(139, 69, 19));
                 break;
 
             case TileType::Tower:
-                tileShape.setFillColor(sf::Color::Blue);
-                break;
-            }
-            switch (m_grid[row][col])
-            {
-            case TileType::Empty:
-                tileShape.setFillColor(sf::Color(34, 139, 34)); // grass green
-                break;
-
-            case TileType::Path:
-                tileShape.setFillColor(sf::Color(139, 69, 19)); // dirt brown
-                break;
-
-            case TileType::Tower:
-                tileShape.setFillColor(sf::Color(100, 100, 255)); // tower base
+                tileShape.setFillColor(sf::Color(100, 100, 255));
                 break;
             }
 
@@ -85,7 +71,7 @@ void Grid::setTile(int row, int col, TileType type)
 {
     m_grid[row][col] = type;
 }
- // สร้างแมพ
+
 void Grid::createFixedPath()
 {
     m_pathPoints.clear();

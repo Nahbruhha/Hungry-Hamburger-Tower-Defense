@@ -79,7 +79,7 @@ int main()
 
     
 
-    sf::RenderWindow window(sf::VideoMode({ COLS * TILE_SIZE, ROWS * TILE_SIZE }), //window
+    sf::RenderWindow window(sf::VideoMode({ COLS * TILE_SIZE, ROWS * TILE_SIZE }),
         "Hungry Hamburger Tower Defense", sf::Style::Titlebar | sf::Style::Close);
 
     sf::Text basicText(font), sniperText(font), rapidText(font);
@@ -215,11 +215,11 @@ int main()
 
                 if (startButton.getGlobalBounds().contains(worldPos))
                 {
-                    startButton.setFillColor(sf::Color(120, 120, 120)); // gray hover
+                    startButton.setFillColor(sf::Color(120, 120, 120));
                 }
                 else
                 {
-                    startButton.setFillColor(sf::Color(100, 200, 100)); // normal
+                    startButton.setFillColor(sf::Color(100, 200, 100));
                 }
                     
                 if (event->is<sf::Event::MouseButtonPressed>())
@@ -235,8 +235,8 @@ int main()
                         {
                             gameState = GameState::Playing;
 
-                            // resset everythign
-                            playerHP = 1;
+                            
+                            playerHP = 10;
                             gold = 300;
                             score = 0;
                             wave = 1;
@@ -247,11 +247,9 @@ int main()
                         }
                     }
                 }
-            } //end of gamestate==menu
+            }
 
-            // =====================
-            // GAME OVER RESTART
-            // =====================
+            
             if (gameState == GameState::GameOver &&
                 event->is<sf::Event::KeyPressed>() &&
                 event->getIf<sf::Event::KeyPressed>()->code == sf::Keyboard::Key::R)
@@ -268,13 +266,11 @@ int main()
                 continue;
             }
 
-            // Only allow building/shooting in Playing state
+            
             if (gameState != GameState::Playing)
                 continue;
 
-            // =====================
-            // KEY INPUT
-            // =====================
+            
             if (event->is<sf::Event::KeyPressed>())
             {
                 auto key = event->getIf<sf::Event::KeyPressed>()->code;
@@ -323,9 +319,7 @@ int main()
                 }
             }
 
-            // =====================
-            // MOUSE INPUT
-            // =====================
+            
             if (event->is<sf::Event::MouseButtonPressed>())
             {
                 
@@ -335,7 +329,7 @@ int main()
                     sf::Vector2i mousePixel = sf::Mouse::getPosition(window);
                     sf::Vector2f worldPos = window.mapPixelToCoords(mousePixel);
 
-                    // tower selection
+                    
                     if (selectedTowerIndex != -1 &&
                         upgradeButton.getGlobalBounds().contains(worldPos))
                     {
@@ -350,7 +344,7 @@ int main()
                             towers[selectedTowerIndex].upgrade(enemies);
                         }
 
-                        break; // STOP everything here
+                        break;
                     }
 
                     int clickedIndex = -1;
@@ -367,14 +361,14 @@ int main()
                     if (clickedIndex != -1)
                     {
                         selectedTowerIndex = clickedIndex;
-                        break; // STOP here
+                        break;
                     }
 
-                    //Otherwise, deselect
+                    
                     selectedTowerIndex = -1;
 
 
-                    // build
+                    
                     if (currentBuildMode != BuildMode::None)
                     {
                         sf::Vector2i cell = grid.getCellFromPixel(mousePixel);
@@ -423,7 +417,7 @@ int main()
 
         
         
-        if (gameState == GameState::Playing) //playing
+        if (gameState == GameState::Playing) 
         {
 
             window.draw(topBar);
@@ -595,7 +589,7 @@ int main()
                 i++;
             }
         }
-        if (selectedTowerIndex != -1) //tower selecting
+        if (selectedTowerIndex != -1)
         {
             sf::CircleShape rangeCircle;
             float range = towers[selectedTowerIndex].getRange();
@@ -617,7 +611,7 @@ int main()
             upgradeCostText.setString("Cost: " +
                 std::to_string(t.getUpgradeCost()));
 
-            // Center "Upgrade"
+            
             sf::FloatRect textBounds = upgradeText.getLocalBounds();
             upgradeText.setOrigin({ textBounds.size.x / 2.f, textBounds.size.y / 2.f });
             upgradeText.setPosition({
@@ -625,7 +619,7 @@ int main()
                 upgradeButton.getPosition().y + 7.f
                 });
 
-            // Center cost text
+            
             sf::FloatRect costBounds = upgradeCostText.getLocalBounds();
             upgradeCostText.setOrigin({ costBounds.size.x / 2.f, costBounds.size.y / 2.f});
             float x = upgradeButton.getPosition().x + upgradeButton.getSize().x / 2.f;
